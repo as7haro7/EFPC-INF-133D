@@ -2,8 +2,8 @@ from http.server import HTTPServer
 from pysimplesoap.server import SoapDispatcher, SOAPHandler
 
 # función del servicio para sumar dos números
-def suma_numeros(num1, num2):
-    return num1 + num2
+def suma_numeros(n1, n2):
+    return n1 + n2
 
 # función del servicio para verificar si una cadena es un palíndromo
 def es_palindromo(cadena):
@@ -24,7 +24,7 @@ dispatcher.register_function(
     "SumarNumeros",
     suma_numeros,
     returns={"resultado": int},
-    args={"num1": int, "num2": int},
+    args={"n1": int, "n2": int},
 )
 
 dispatcher.register_function(
