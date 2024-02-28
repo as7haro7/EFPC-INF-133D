@@ -5,9 +5,33 @@ import json
 estudiantes = [
     {
         "id": 1,
-        "nombre": "Pedrito",
-        "apellido": "García",
-        "carrera": "Ingeniería de Sistemas",
+        "nombre": "Pablo",
+        "apellido": "Mendoza",
+        "carrera": "Ingeniería Mecanica",
+    },
+    {
+        "id": 2,
+        "nombre": "Elder",
+        "apellido": "Gonzales",
+        "carrera": "Ingeniería Mecanica",
+    },
+    {
+        "id": 3,
+        "nombre": "Elsa",
+        "apellido": "Apaza",
+        "carrera": "Ingeniería Quimica",
+    },
+    {
+        "id": 4,
+        "nombre": "Alejandra",
+        "apellido": "Quispe",
+        "carrera": "Ingeniería Quimica",
+    },
+    {
+        "id": 5,
+        "nombre": "Pool",
+        "apellido": "Solares",
+        "carrera": "Ingeniería Electronica",
     },
 ]
 
