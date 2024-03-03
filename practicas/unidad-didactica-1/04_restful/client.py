@@ -2,26 +2,11 @@ import requests
 
 # Consultando a un servidor RESTful
 url = "http://localhost:8000/"
-# # GET obtener a todos los estudiantes por la ruta /estudiantes
-# ruta_get = url + "estudiantes"
-# get_response = requests.request(method="GET", url=ruta_get)
-# print(get_response.text)
 
 # GET ruta para mostrar todas las carreras /carreras
 ruta_get = url + "carreras"
 get_response = requests.request(method="GET", url=ruta_get)
 print(get_response.text)
-
-# # POST agrega un nuevo estudiante por la ruta /estudiantes
-# ruta_post = url + "estudiantes"
-# nuevo_estudiante = {
-#     "nombre": "Juanito",
-#     "apellido": "Pérez",
-#     "carrera": "Ingeniería Agronomica",
-# }
-# post_response = requests.request(method="POST", url=ruta_post, json=nuevo_estudiante)
-# print(post_response.text)
-
 # POST agrega un nuevo estudiante por la ruta /estudiantes
 ruta_post = url + "estudiantes"
 nuevo_estudiante = {
@@ -40,6 +25,32 @@ nuevo_estudiante = {
 }
 post_response = requests.request(method="POST", url=ruta_post, json=nuevo_estudiante)
 print(post_response.text)
+# GET busca a un estudiante por carrera /estudiantes/{carrera} 
+ruta_filtrar_nombre = url + "carreras/Economia"
+filtrar_nombre_response = requests.request(method="GET", 
+                                url=ruta_filtrar_nombre)
+print(filtrar_nombre_response.text)
+
+
+
+
+
+# # GET obtener a todos los estudiantes por la ruta /estudiantes
+# ruta_get = url + "estudiantes"
+# get_response = requests.request(method="GET", url=ruta_get)
+# print(get_response.text)
+
+# # POST agrega un nuevo estudiante por la ruta /estudiantes
+# ruta_post = url + "estudiantes"
+# nuevo_estudiante = {
+#     "nombre": "Juanito",
+#     "apellido": "Pérez",
+#     "carrera": "Ingeniería Agronomica",
+# }
+# post_response = requests.request(method="POST", url=ruta_post, json=nuevo_estudiante)
+# print(post_response.text)
+
+
 
 # # DELETE elimina todos los estudiantes por la ruta /estudiantes
 # ruta_eliminar = url + "estudiantes"
@@ -75,11 +86,6 @@ print(post_response.text)
 #                                 url=ruta_filtrar_nombre)
 # print(filtrar_nombre_response.text)
 
-# GET busca a un estudiante por carrera /estudiantes/{carrera} 
-ruta_filtrar_nombre = url + "carreras/Economia"
-filtrar_nombre_response = requests.request(method="GET", 
-                                url=ruta_filtrar_nombre)
-print(filtrar_nombre_response.text)
 
 # # PUT actualiza un estudiante por la ruta /estudiantes
 # ruta_actualizar = url + "estudiantes"
