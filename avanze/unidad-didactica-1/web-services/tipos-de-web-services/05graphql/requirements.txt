@@ -1,0 +1,3 @@
+servido para graphQL
+pip install graphene
+
