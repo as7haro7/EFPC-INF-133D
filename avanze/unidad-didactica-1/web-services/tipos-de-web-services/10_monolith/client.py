@@ -19,9 +19,12 @@ query = """
     
     
 """
+sample = {"title": "title", "content": "content"}
+
+
 titulo= "mi experiencia como dev"
 contenido = "es triste, por que no entiendo nada :()"
-response = requests.post(f"{url}/posts/", json={'query': query})
+response = requests.post(f"{url}/posts/",sample)
 # response = requests.post(f"{url}/posts/")
 
 # - actualizar el post 2
