@@ -13,12 +13,12 @@ class Chocolate:
         self.sabor = sabor
         self.relleno = relleno
 
-# costructor para producto
+# costructor para producto tableta
 class Tableta(Chocolate):
     def __init__(self, peso, sabor):
         super().__init__("tableta", peso, sabor, False)
 
-# constructor para drone
+# constructor para bombon
 class Bombon(Chocolate):
     def __init__(self, peso, sabor):
         super().__init__("bombon", peso, sabor, True)
@@ -74,6 +74,8 @@ class ChocolateService:
         product = self.factory.create_producto(
             type, sabor, peso
         )
+        keys = list(productos.keys())
+        
         productos[len(productos) + 1] = product
         return product
 
