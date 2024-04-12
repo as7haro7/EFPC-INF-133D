@@ -125,38 +125,93 @@ conn=sqlite3.connect("personal.db")
 # conn.commit()
 
 
-print("\empleados y salarios:")
+# print("\Lista los empleados y sus salarios:")
+# cursor = conn.execute(
+#     """
+#         SELECT salario,nombres,apellido_paterno,apellido_materno 
+#         FROM SALARIOS 
+#         INNER JOIN EMPLEADOS ON empleado_id=EMPLEADOS.id
+  
+#     """
+# )
+# for row in cursor:
+#     print(row)
+
+print("\Lista los empleados, el departamento en el que trabajan y el cargo que ocupan:")
 cursor = conn.execute(
     """
-        SELECT SALARIOS.salario, EMPLEADOS.nombres
-        FROM SALARIOS
-        JOIN EMPLEADOS ON SALARIOS.empleado_id = SALARIOS.id       
+        SELECT e.nombres, e.apellido_paterno, e.apellido_materno, d.nombre AS departamento, c.nombre AS cargo
+        FROM EMPLEADOS AS e
+        INNER JOIN CARGOS AS c ON e.codigo_id=c.id
+        INNER JOIN DEPARTAMENTOS AS d ON e.departamento_id = d.id  
     """
 )
 for row in cursor:
     print(row)
 
-print("\empleados , departamento y cargo:")
-cursor = conn.execute(
+print("Lista los empleados, el departamento en el que trabajan y el cargo que ocupan y el salario que ganan")
+conn.execute(
     """
-        SELECT *
-        FROM EMPLEADOS
-        INNER JOIN DEPARTAMENTOS ON EMPLEADOS.departamento_id = EMPLEADOS.id  
-        INNER JOIN CARGOS ON EMPLEADOS.codigo_id = EMPLEADOS.id       
+    SELECT e.nombres, e.apellido_paterno, e.apellido_materno, d.nombre AS departamento, c.nombre AS cargo, s.salario AS salario
+    FROM SALARIOS AS s
+    INNER JOIN EMPLEADOS AS e ON s.empleado_id=e.id
+    INNER JOIN CARGOS AS c ON e.codigo_id=c.id
+    INNER JOIN DEPARTAMENTOS AS d ON e.departamento_id = d.id
     """
 )
-for row in cursor:
-    print(row)
-
-# update
+print("UPDATE")
 conn.execute(
     """
     UPDATE EMPLEADOS
-    SET codigo_id = 3
+    SET codigo_id = 1
+    WHERE id = 2
+    """
+)
+conn.commit()
+
+conn.execute(
+    """
+    UPDATE SALARIOS
+    SET salario = 3000
+    WHERE id = 2
+    """
+)
+conn.commit()
+
+conn.execute(
+    """
+    DELETE FROM SALARIOS 
+    WHERE id = 2;
+    DELETE FROM EMPLEADOS
     WHERE id = 2;
     """
 )
 conn.commit()
+
+
+
+# final parte
+conn.execute(
+    """
+    INSERT INTO SALARIOS(empleado_id,salario,fecha_inicio,fecha_fin,fecha_creacion)
+    VALUES (2,3500,'05-05-2023','05-05-2023','05-012-2024');
+    INSERT INTO EMPLEADOS(nombres,apellido_paterno,apellido_materno,fecha_contratacion,departamento_id,codigo_id,fecha_creacion)
+    VALUES ('carlos','rodriguez','sanchez','15-05-2023',1,3,'09-04-2024');
+    """
+)
+conn.commit()
+
+
+print("Lista los empleados, el departamento en el que trabajan y el cargo que ocupan y el salario que ganan")
+conn.execute(
+    """
+    SELECT e.nombres, e.apellido_paterno, e.apellido_materno, d.nombre AS departamento, c.nombre AS cargo, s.salario AS salario
+    FROM SALARIOS AS s
+    INNER JOIN EMPLEADOS AS e ON s.empleado_id=e.id
+    INNER JOIN CARGOS AS c ON e.codigo_id=c.id
+    INNER JOIN DEPARTAMENTOS AS d ON e.departamento_id = d.id
+    """
+)
 
 # cerrar conexion
 conn.close()
