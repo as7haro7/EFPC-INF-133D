@@ -5,11 +5,10 @@ import sqlite3
 conn=sqlite3.connect("instituto.db")
 
 
-# consultar datos
+# Listar datos de matriculación
 print("\nMATRICULACION:")
 cursor = conn.execute(
-    "SELECT * FROM MATRICULACION"
+    "SELECT * FROM CARRERAS"
 )
-
 for row in cursor:
     print(row)

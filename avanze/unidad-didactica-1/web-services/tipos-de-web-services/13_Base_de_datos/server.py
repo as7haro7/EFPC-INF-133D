@@ -33,7 +33,7 @@ try:
         VALUES('licenciatura en administracion', 4)
         """
     )
-except:
+except sqlite3.OperationalError:
     print("tabla carreras ya creada")
 
 # consultar datos
@@ -74,7 +74,7 @@ try:
     cursor = conn.execute("SELECT * FROM ESTUDIANTES")
     for row in cursor:
         print(row)
-except:
+except sqlite3.OperationalError:
     print("tabla estudiantes ya creada")
 
 
@@ -112,7 +112,7 @@ try:
         VALUES (1, 2, '2024-01-25')
         """
     )
-except:
+except sqlite3.OperationalError:
     print("tabla matriculacion ya creada")
 
 # Consultar datos de matriculación
