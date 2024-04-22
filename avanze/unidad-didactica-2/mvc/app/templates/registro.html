@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Registrar Usuario</h2>
+<form method="post">
+    <label for="first_name">Nombre:</label>
+    <input type="text" id="first_name" name="first_name" required><br>
+    <label for="last_name">Apellido:</label>
+    <input type="text" id="last_name" name="last_name" required><br>
+    
+    <label for="last_name">Email:</label>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="last_name">Contraseña:</label>
+    <input type="password" id="contrasena" name="contrasena" required><br>
+
+    <label for="last_name">Fecha Nacimiento:</label>
+    <input type="date" value="2018-07-22" id="fecha_nac" name="fecha_nac" required><br>
+
+    <input type="submit" value="Registrar">
+</form>
+{% endblock %}
