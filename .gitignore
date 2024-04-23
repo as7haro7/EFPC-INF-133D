@@ -1,0 +1,6 @@
+# Ignorar el entorno virtual
+venv/
+
+# Otros archivos o directorios a ignorar
+.DS_Store
+*.log

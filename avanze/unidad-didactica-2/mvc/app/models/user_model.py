@@ -18,7 +18,6 @@ class User(db.Model):
     fecha_nac = db.Column(db.Date, nullable=False)
 
     # Inicializa la clase `User`
-    # el id es autoincrementable
     def __init__(self, first_name, last_name, email, contrasena, fecha_nac):
         self.first_name = first_name
         self.last_name = last_name
