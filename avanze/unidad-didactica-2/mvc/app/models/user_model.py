@@ -24,9 +24,8 @@ class User(db.Model):
         self.last_name = last_name
         self.email = email
         self.contrasena = contrasena
-        # self.fecha_nac = fecha_nac
-        self.fecha_nac = datetime.strptime(fecha_nac, "%Y %B, %d")
-
+        self.fecha_nac = datetime.strptime(fecha_nac, "%Y-%m-%d")
+    
     # Guarda un usuario en la base de datos
     def save(self):
         db.session.add(self)
