@@ -42,7 +42,16 @@ class User(db.Model):
     def update(self):
         db.session.commit()
 
-    # Eliminar
-    def delete(self):
-        # return User.query.filter(User.id == 123).delete()
-        db.session.delete()
+    # # Eliminar
+    # def delete(self):
+    #     db.session.delete(self) 
+
+    @staticmethod
+    def delete(id):
+        user = User.query.get(id)
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            return True
+        else:
+            return False
