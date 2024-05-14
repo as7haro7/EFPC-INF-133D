@@ -72,9 +72,11 @@ def update_user(id):
         # Obtenemos los datos del formulario
         first_name = request.form["first_name"]
         last_name = request.form["last_name"]
+        role = request.form["role"]
         # Actualizamos los datos del usuario
         user.first_name = first_name
         user.last_name = last_name
+        user.role = role
         # Guardamos los cambios
         user.update()
         return redirect(url_for("user.list_users"))
