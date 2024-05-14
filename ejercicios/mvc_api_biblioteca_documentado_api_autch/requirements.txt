@@ -1,7 +1,0 @@
-flask
-flask-sqlalchemy
-flask-swagger-ui
-Flask-Login
-
-flask-JWT-Extended
-flask_swagger_ui
