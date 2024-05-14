@@ -17,7 +17,7 @@ class User(UserMixin, db.Model): #con herencia de UserMixin, db.Model
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     username = db.Column(db.String(100), unique=True, nullable=False)
-    role = db.Column(db.String(100), unique=True, nullable=False)
+    role = db.Column(db.String(100), nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
 
     # Inicializa la clase `User`
