@@ -39,7 +39,7 @@ def create_dulce():
     return dulce_view.create_dulce()
 
 
-@dulce_bp.route("/animals/<int:id>/update", methods=["GET", "POST"])
+@dulce_bp.route("/dulces/<int:id>/update", methods=["GET", "POST"])
 # logueo
 @login_required
 # role
@@ -47,31 +47,32 @@ def create_dulce():
 def update_animal(id):
     animal = Animal.get_by_id(id)
     if not animal:
-        return "Animal no encontrado", 404
+        return "Dulce no encontrado", 404
     if request.method == "POST":
         if current_user.has_role("admin"):
-            name = request.form["name"]
-            species = request.form["species"]
-            age = int(request.form["age"])
-            animal.update(name=name, species=species, age=age)
-            flash("Animal actualizado exitosamente", "success")
-            return redirect(url_for("animal.list_animals"))
+            marca = request.form["marca"]
+            peso = request.form["peso"]
+            sabor = int(request.form["sabor"])
+            origen = int(request.form["origen"])
+            dulce = Dulce(marca=marca, peso=peso, sabor=sabor, origen=origen)
+            flash("Dulce actualizado exitosamente", "success")
+            return redirect(url_for("dulce.list_dulces"))
         else:
             return jsonify({"message": "Unauthorized"}), 403
     return animal_view.update_animal(animal)
 
 
-@dulce_bp.route("/animals/<int:id>/delete")
+@dulce_bp.route("/dulces/<int:id>/delete")
 @login_required
 @role_required("admin")
-def delete_animal(id):
-    animal = Animal.get_by_id(id)
-    if not animal:
-        return "Animal no encontrado", 404
+def delete_dulce(id):
+    dulce = Dulce.get_by_id(id)
+    if not dulce:
+        return "Dulce no encontrado", 404
         # borrar el siguiente if  y else esta de mas
     if current_user.has_role("admin"):
-        animal.delete()
-        flash("Animal eliminado exitosamente", "success")
-        return redirect(url_for("animal.list_animals"))
+        dulce.delete()
+        flash("dulce eliminado exitosamente", "success")
+        return redirect(url_for("dulce.list_dulces"))
     else:
         return jsonify({"message": "Unauthorized"}), 403
