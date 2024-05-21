@@ -17,14 +17,14 @@
                 <a class="navbar-item" href="{{ url_for('user.list_users') }}">
                     Lista de Usuarios
                 </a>
-                <a class="navbar-item" href="{{ url_for('animal.create_animal') }}">
+                <a class="navbar-item" href="{{ url_for('libro.create_libro') }}">
                     Crear Libro
                 </a>
                 {% endif %}
                 <a class="navbar-item" href="{{ url_for('user.profile', id=current_user.id) }}">
                     Perfil
                 </a>
-                <a class="navbar-item" href="{{ url_for('animal.list_animals') }}">
+                <a class="navbar-item" href="{{ url_for('libro.list_libros') }}">
                     Lista de Libros
                 </a>
                 <a class="navbar-item" href="{{ url_for('user.logout') }}">
