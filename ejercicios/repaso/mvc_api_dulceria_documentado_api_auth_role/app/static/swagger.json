@@ -5,9 +5,9 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/libros": {
+        "/api/dulces": {
             "get": {
-                "summary": "Obtiene la lista de todos los libros",
+                "summary": "Obtiene la lista de todos los dulces",
                 "security": [
                     {
                         "JWTAuth": []
@@ -15,13 +15,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Lista de libros",
+                        "description": "Lista de dulces",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Libro"
+                                        "$ref": "#/components/schemas/Dulce"
                                     }
                                 }
                             }
@@ -30,7 +30,7 @@
                 }
             },
             "post": {
-                "summary": "Crea un nuevo libro",
+                "summary": "Crea un nuevo dulce",
                 "security": [
                     {
                         "JWTAuth": []
@@ -40,18 +40,18 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Libro"
+                                "$ref": "#/components/schemas/Dulce"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Libro creado",
+                        "description": "Dulce creado",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Libro"
+                                    "$ref": "#/components/schemas/Dulce"
                                 }
                             }
                         }
@@ -59,9 +59,9 @@
                 }
             }
         },
-        "/api/libros/{id}": {
+        "/api/dulces/{id}": {
             "get": {
-                "summary": "Obtiene un libro específico por su ID",
+                "summary": "Obtiene un dulce específico por su ID",
                 "security": [
                     {
                         "JWTAuth": []
@@ -79,22 +79,22 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Detalles del libro",
+                        "description": "Detalles del Dulce",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Libro"
+                                    "$ref": "#/components/schemas/Dulce"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Libro no encontrado"
+                        "description": "Dulce no encontrado"
                     }
                 }
             },
             "put": {
-                "summary": "Actualiza un libro existente por su ID",
+                "summary": "Actualiza un dulce existente por su ID",
                 "security": [
                     {
                         "JWTAuth": []
@@ -114,29 +114,29 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Libro"
+                                "$ref": "#/components/schemas/Dulce"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Libro actualizado",
+                        "description": "Dulce actualizado",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Libro"
+                                    "$ref": "#/components/schemas/Dulce"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Libro no encontrado"
+                        "description": "Dulce no encontrado"
                     }
                 }
             },
             "delete": {
-                "summary": "Elimina un libro existente por su ID",
+                "summary": "Elimina un dulce existente por su ID",
                 "security": [
                     {
                         "JWTAuth": []
@@ -154,10 +154,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Libro eliminado"
+                        "description": "Dulce eliminado"
                     },
                     "404": {
-                        "description": "Libro no encontrado"
+                        "description": "Dulce no encontrado"
                     }
                 }
             }
@@ -230,27 +230,31 @@
             }
         },
         "schemas": {
-            "Libro": {
+            "Dulce": {
                 "type": "object",
                 "properties": {
                     "id": {
                         "type": "integer",
                         "readOnly": true
                     },
-                    "autor": {
+                    "marca": {
                         "type": "string"
                     },
-                    "edicion": {
+                    "peso": {
+                        "type": "number"
+                    },
+                    "sabor": {
                         "type": "string"
                     },
-                    "disponibilidad": {
+                    "origen": {
                         "type": "string"
                     }
                 },
                 "required": [
-                    "autor",
-                    "edicion",
-                    "disponibilidad"
+                    "marca",
+                    "peso",
+                    "sabor",
+                    "origen"
                 ]
             },
             "User": {
@@ -262,7 +266,7 @@
                     "password": {
                         "type": "string"
                     },
-                    "role": {
+                    "roles": {
                         "type": "array",
                         "items": {
                             "type": "string",
@@ -276,7 +280,7 @@
                 "required": [
                     "username",
                     "password",
-                    "role"
+                    "roles"
                 ]
             },
             "Login": {
