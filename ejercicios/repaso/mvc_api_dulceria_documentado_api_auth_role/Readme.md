@@ -1,4 +1,4 @@
-###Construye una Web App para administrar la información de una dulcería
+### Construye una Web App para administrar la información de una dulcería
 con las siguientes características:
 ● El usuario con rol de ‘admin’ que es capaz de listar, crear, editar y
 borrar usuario y dulces
