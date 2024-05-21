@@ -14,7 +14,7 @@ dulce_bp = Blueprint("dulce", __name__)
 # logueo
 @login_required
 def list_dulces():
-    dulces = Dulces.get_all()
+    dulces = Dulce.get_all()
     return dulce_view.list_dulces(dulces)
 
 
@@ -27,13 +27,13 @@ def create_dulce():
     if request.method == "POST":
         if current_user.has_role("admin"):
             marca = request.form["marca"]
-            peso = request.form["peso"]
-            sabor = int(request.form["sabor"])
-            origen = int(request.form["origen"])
+            peso = int(request.form["peso"])
+            sabor = request.form["sabor"]
+            origen = request.form["origen"]
             dulce = Dulce(marca=marca, peso=peso, sabor=sabor, origen=origen)
             dulce.save()
             flash("Dulce creado exitosamente", "success")
-            return redirect(url_for("dulce.list_dulce"))
+            return redirect(url_for("dulce.list_dulces"))
         else:
             return jsonify({"message": "Unauthorized"}), 403
     return dulce_view.create_dulce()
@@ -44,22 +44,22 @@ def create_dulce():
 @login_required
 # role
 @role_required("admin")
-def update_animal(id):
-    animal = Animal.get_by_id(id)
-    if not animal:
+def update_dulce(id):
+    dulce = Dulce.get_by_id(id)
+    if not dulce:
         return "Dulce no encontrado", 404
     if request.method == "POST":
         if current_user.has_role("admin"):
             marca = request.form["marca"]
-            peso = request.form["peso"]
-            sabor = int(request.form["sabor"])
-            origen = int(request.form["origen"])
-            dulce = Dulce(marca=marca, peso=peso, sabor=sabor, origen=origen)
+            peso = int(request.form["peso"])
+            sabor = request.form["sabor"]
+            origen = request.form["origen"]
+            dulce.update(marca=marca, peso=peso, sabor=sabor, origen=origen)
             flash("Dulce actualizado exitosamente", "success")
             return redirect(url_for("dulce.list_dulces"))
         else:
             return jsonify({"message": "Unauthorized"}), 403
-    return animal_view.update_animal(animal)
+    return dulce_view.update_dulce(dulce)
 
 
 @dulce_bp.route("/dulces/<int:id>/delete")

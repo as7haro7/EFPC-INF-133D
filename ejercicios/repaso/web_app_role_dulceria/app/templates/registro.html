@@ -34,9 +34,14 @@
     <div class="field">
         <label for="role">Rol:</label>
         <div class="control">
-            <input type="text" id="role" name="role" 
-            required class="input">
-        </div>
+            <div class="select">
+              <select  id="role" name="role" 
+              required>
+                <option>admin</option>
+                <option>user</option>
+              </select>
+            </div>
+          </div>
     </div>
     <input type="submit" value="Registrar" class="button is-primary">
 </form>
