@@ -3,6 +3,3 @@
 
 
 
-
-- activar env
-    source env/bin/activate
