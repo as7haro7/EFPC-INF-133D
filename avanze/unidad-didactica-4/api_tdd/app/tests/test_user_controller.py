@@ -29,3 +29,7 @@ def test_login_user_fail(test_client):
     user_credentials = {"username1": "testuser", "password": "testpassword"}
     response = test_client.post("/api/login", json=user_credentials)
     assert response.status_code == 401
+    
+    
+    
+

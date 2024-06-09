@@ -1,71 +1,92 @@
-from flask import Blueprint, request, redirect, url_for, flash, jsonify
-from flask_login import login_required, current_user
-from models.product_model import Product
-from views import product_view
+from flask import Blueprint, jsonify, request
 
-# Importamos el decorador de roles
-from utils.decorators import role_required
+from app.models.product_model import Product
+from app.utils.decorators import jwt_required, roles_required
+from app.views.product_view import render_product_detail, render_product_list
 
+# Crear un blueprint para el controlador de productos
 product_bp = Blueprint("product", __name__)
 
 
-@product_bp.route("/products")
-@login_required
-def list_products():
+# Ruta para obtener la lista de productes
+@product_bp.route("/products", methods=["GET"])
+@jwt_required
+@roles_required(roles=["admin", "user"])
+def get_products():
     products = Product.get_all()
-    return product_view.list_products(products)
+    return jsonify(render_product_list(products))
 
 
-@product_bp.route("/products/create", methods=["GET", "POST"])
-@login_required
-@role_required("admin")
+# Ruta para obtener un product específico por su ID
+@product_bp.route("/products/<int:id>", methods=["GET"])
+@jwt_required
+@roles_required(roles=["admin", "user"])
+def get_product(id):
+    product = Product.get_by_id(id)
+    if product:
+        return jsonify(render_product_detail(product))
+    return jsonify({"error": "Producto no encontrado"}), 404
+
+
+# Ruta para crear un nuevo product
+@product_bp.route("/products", methods=["POST"])
+@jwt_required
+@roles_required(roles=["admin"])
 def create_product():
-    if request.method == "POST":
-        if current_user.has_role("admin"):
-            name = request.form["name"]
-            description = request.form["description"]
-            price = int(request.form["price"])
-            stock = int(request.form["stock"])
-            product = Product(name=name, description=description, price=price, stock=stock)
-            product.save()
-            flash("Producto creado exitosamente", "success")
-            return redirect(url_for("product.list_products"))
-        else:
-            return jsonify({"message": "Unauthorized"}), 403
-    return product_view.create_product()
+    data = request.json
+    name = data.get("name")
+    description = data.get("description")
+    price = data.get("price")
+    stock = data.get("stock")
 
+    # Validación simple de datos de entrada
+    if not name or not description or not price or stock is None:
+        return jsonify({"error": "Faltan datos requeridos"}), 400
 
-@product_bp.route("/products/<int:id>/update", methods=["GET", "POST"])
-@login_required
-@role_required("admin")
+    # Crear un nuevo product y guardarlo en la base de datos
+    product = Product(name=name, description=description, price=price, stock=stock)
+    product.save()
+
+    return jsonify(render_product_detail(product)), 201
+
+            
+  
+            
+
+# Ruta para actualizar un animal existente
+@product_bp.route("/products/<int:id>", methods=["PUT"])
+@jwt_required
+@roles_required(roles=["admin"])
 def update_product(id):
     product = Product.get_by_id(id)
+
     if not product:
-        return "producto no encontrado", 404
-    if request.method == "POST":
-        if current_user.has_role("admin"):
-            name = request.form["name"]
-            description = request.form["description"]
-            price = int(request.form["price"])
-            stock = int(request.form["stock"])
-            product.update(name=name, description=description, price=price, stock=stock)
-            flash("product actualizado exitosamente", "success")
-            return redirect(url_for("product.list_products"))
-        else:
-            return jsonify({"message": "Unauthorized"}), 403
-    return product_view.update_product(product)
+        return jsonify({"error": "Producto no encontrado"}), 404
+
+    data = request.json
+    name = data.get("name")
+    description = data.get("description")
+    price = data.get("price")
+    stock = data.get("stock")
+
+    # Actualizar los datos del animal
+    product.update(name=name, description=description, price=price, stock=stock)
+
+    return jsonify(render_product_detail(product))
 
 
-@product_bp.route("/products/<int:id>/delete")
-@login_required
-@role_required("admin")
+# Ruta para eliminar un product existente
+@product_bp.route("/products/<int:id>", methods=["DELETE"])
+@jwt_required
+@roles_required(roles=["admin"])
 def delete_product(id):
     product = Product.get_by_id(id)
+
     if not product:
-        return "product no encontrado", 404
-    if current_user.has_role("admin"):
-        product.delete()
-        flash("product eliminado exitosamente", "success")
-        return redirect(url_for("product.list_products"))
-    else:
-        return jsonify({"message": "Unauthorized"}), 403
+        return jsonify({"error": "Producto no encontrado"}), 404
+
+    # Eliminar el product de la base de datos
+    product.delete()
+
+    # Respuesta vacía con código de estado 204 (sin contenido)
+    return "", 204
